@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Beginner's Guide to Installing Kali Linux</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Animation library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- Custom Tailwind configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kali: {
+                            blue: '#0066cc',
+                            dark: '#1E293B',
+                            light: '#e6f3ff',
+                            warning: '#ff9933',
+                            success: '#33cc33',
+                            error: '#ff3333',
+                            commandbg: '#2d2d2d',
+                            commandtext: '#f8f8f8'
+                        }
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 3s infinite',
+                        'pulse-slow': 'pulse 4s infinite',
+                        'fade-in': 'fadeIn 1s ease-in',
+                        'slide-in': 'slideIn 0.5s ease-out'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(0, 102, 204, 0.7); }
+            50% { box-shadow: 0 0 20px rgba(0, 102, 204, 0.9); }
+            100% { box-shadow: 0 0 5px rgba(0, 102, 204, 0.7); }
+        }
+        
+        .hover-glow:hover {
+            animation: glow 1.5s infinite;
+        }
+        
+        .type-animation {
+            overflow: hidden;
+            white-space: nowrap;
+            display: inline-block;
+            animation: typing 3.5s steps(40, end);
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        .command-box {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #0066cc;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #004d99;
+        }
+        
+        /* Code highlighting */
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+    <!-- Hero background with pattern -->
+    <div class="absolute top-0 w-full h-96 bg-gradient-to-br from-blue-600 to-indigo-800 -z-10 opacity-10"
+         style="clip-path: polygon(0 0, 100% 0, 100% 65%, 0 95%);"></div>
+
+    <!-- Main content container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-24">
+
+        <!-- Header section -->
+        <header class="text-center mb-16 animate__animated animate__fadeIn">
+            <h1 class="text-5xl font-bold text-kali-blue mb-6 mt-8 type-animation">
+                A Beginner's Guide to Installing Kali Linux
+            </h1>
+            
+            <div class="flex justify-center items-center mb-8">
+                <img src="https://www.kali.org/images/kali-dragon-icon.svg" 
+                     alt="Kali Linux Logo" 
+                     class="w-32 h-32 animate__animated animate__pulse animate__infinite animate__slow hover-glow">
+            </div>
+            
+            <div class="bg-blue-100 border-l-4 border-kali-blue p-4 rounded-md shadow-lg max-w-3xl mx-auto transform transition hover:scale-105 duration-300">
+                <strong class="text-kali-blue">About This Guide:</strong> 
+                <p class="mt-2">This guide is designed for complete beginners who want to learn about Kali Linux and basic Linux concepts. We'll walk through installation in a virtual machine environment and cover essential Linux fundamentals.</p>
+            </div>
+        </header>
+
+        <!-- Table of Contents -->
+        <nav class="mb-16 bg-white p-6 rounded-lg shadow-md animate__animated animate__fadeIn animate__delay-1s">
+            <h2 class="text-2xl font-bold text-kali-blue mb-4">Table of Contents</h2>
+            <ul class="space-y-2 ml-4">
+                <li class="transform transition duration-300 hover:translate-x-2">
+                    <a href="#section1" class="text-blue-600 hover:text-blue-800 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                        Section 1: Introduction to Kali Linux
+                    </a>
+                </li>
+                <li class="transform transition duration-300 hover:translate-x-2">
+                    <a href="#section2" class="text-blue-600 hover:text-blue-800 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                        Section 2: Setting Up Kali Linux in a Virtual Machine
+                    </a>
+                </li>
+                <li class="transform transition duration-300 hover:translate-x-2">
+                    <a href="#section3" class="text-blue-600 hover:text-blue-800 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                        Section 3: Linux System Fundamentals
+                    </a>
+                </li>
+                <li class="transform transition duration-300 hover:translate-x-2">
+                    <a href="#section4" class="text-blue-600 hover:text-blue-800 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                        Section 4: Basic Linux Commands and Navigation
+                    </a>
+                </li>
+                <li class="transform transition duration-300 hover:translate-x-2">
+                    <a href="#section5" class="text-blue-600 hover:text-blue-800 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                        Section 5: Kali Linux Tools Introduction
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Section 1: Introduction -->
+        <section id="section1" class="mb-16 scroll-mt-20">
+            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-4 rounded-t-lg shadow-md">
+                <h2 class="text-3xl font-bold">Section 1: Introduction to Kali Linux</h2>
+            </div>
+            <div class="bg-white p-6 rounded-b-lg shadow-md mb-8">
+                <h3 class="text-2xl font-semibold text-kali-blue mb-4">What is Kali Linux?</h3>
+                <p class="mb-4">Kali Linux is a specialized Linux distribution based on Debian, designed specifically for cybersecurity tasks like penetration testing, digital forensics, and security auditing.</p>
+                
+                <div class="bg-blue-50 border-l-4 border-kali-blue p-4 rounded-md mb-6 animate__animated animate__fadeIn">
+                    <strong class="text-kali-blue">Key Facts About Kali Linux:</strong>
+                    <ul class="list-disc ml-6 mt-2 space-y-1">
+                        <li>Developed and maintained by <span class="font-semibold">Offensive Security</span></li>
+                        <li>Includes over <span class="font-semibold">600</span> pre-installed security tools</li>
+                        <li>Used by cybersecurity professionals worldwide</li>
+                        <li>Open-source and freely available</li>
+                    </ul>
+                </div>
+                
+                <div class="relative group overflow-hidden rounded-lg shadow-xl mb-6">
+                    <img src="env.png" alt="Kali Linux Desktop Environment" class="w-full transition duration-300 group-hover:scale-105">
+                    <div class="absolute bottom-0 w-full bg-gradient-to-t from-black to-transparent p-4">
+                        <p class="text-white text-center italic">The Kali Linux Desktop Environment</p>
+                    </div>
+                </div>
+                
+                <h3 class="text-2xl font-semibold text-kali-blue mb-4">Who Should Use Kali Linux?</h3>
+                
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-md shadow-md transform transition duration-300 hover:-translate-y-1">
+                        <h4 class="text-lg font-semibold text-green-700 mb-2">Ideal For:</h4>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li>Cybersecurity professionals</li>
+                            <li>Network administrators</li>
+                            <li>Security researchers</li>
+                            <li>IT students learning about security</li>
+                            <li>Anyone interested in learning cybersecurity (with proper ethical considerations)</li>
+                        </ul>
+                    </div>
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-md shadow-md transform transition duration-300 hover:-translate-y-1">
+                        <h4 class="text-lg font-semibold text-red-700 mb-2">Not Recommended For:</h4>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li>Complete Linux beginners (without guidance)</li>
+                            <li>Regular desktop users</li>
+                            <li>Those not interested in security</li>
+                            <li>Anyone with malicious intent</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-md shadow-md mb-6">
+                    <p class="flex items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <span>
+                            <strong class="text-amber-700">Important:</strong> The tools in Kali Linux are powerful and should be used ethically and legally. Always practice on systems you own or have explicit permission to test.
+                        </span>
+                    </p>
+                </div>
+                
+                <h3 class="text-2xl font-semibold text-kali-blue mb-4">Why Use a Virtual Machine?</h3>
+                <p class="mb-4">Installing Kali Linux in a virtual machine (VM) is highly recommended for beginners because:</p>
+                
+                <div class="flex justify-center space-x-6 mb-6">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Virtualbox_logo.png" alt="VirtualBox Logo" class="h-20 transition transform hover:scale-110 duration-300">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Vmware_workstation_16_icon.svg" alt="VMware Logo" class="h-20 transition transform hover:scale-110 duration-300">
+                </div>
+                <p class="text-center italic text-gray-600 mb-4">Popular Virtualization Software: VirtualBox and VMware</p>
+                
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        <span><strong>Isolation:</strong> Your main system remains unaffected by anything done in Kali</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        <span><strong>Safety:</strong> Mistakes won't damage your main operating system</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        <span><strong>Snapshots:</strong> Create restore points to revert to if something goes wrong</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        <span><strong>Flexibility:</strong> Run Kali alongside your regular operating system</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 2: Setting Up Kali Linux -->
+        <section id="section2" class="mb-16 scroll-mt-20">
+            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-4 rounded-t-lg shadow-md">
+                <h2 class="text-3xl font-bold">Section 2: Setting Up Kali Linux in a Virtual Machine</h2>
+            </div>
+            <div class="bg-white p-6 rounded-b-lg shadow-md">
+                <!-- Tab Navigation -->
+                <div class="flex border-b border-gray-200 mb-6">
+                    <button id="vmware-tab" class="py-2 px-4 text-blue-600 border-b-2 border-blue-500 font-medium" onclick="switchTab('vmware-tab', 'vmware-content')">
+                        VMware
+                    </button>
+                    <button id="virtualbox-tab" class="py-2 px-4 text-gray-600 font-medium" onclick="switchTab('virtualbox-tab', 'virtualbox-content')">
+                        VirtualBox
+                    </button>
+                </div>
+                
+                <!-- VMware Content -->
+                <div id="vmware-content" class="tab-content">
+                    <h3 class="text-2xl font-semibold text-kali-blue mb-6">Installing Kali Linux on VMware</h3>
+                    
+                    <div class="mb-8 bg-gray-50 border border-gray-200 rounded-lg p-6 shadow-sm relative overflow-hidden">
+                        <div class="absolute -top-2 -left-2 bg-blue-600 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg">
+                            <span class="font-bold text-lg">1</span>
+                        </div>
+                        <div class="ml-10">
+                            <h4 class="text-xl font-semibold mb-3">Download the Kali Linux ISO</h4>
+                            <p class="mb-4">Visit the official Kali Linux website at <a href="https://www.kali.org/get-kali/" class="text-blue-600 hover:underline" target="_blank">https://www.kali.org/get-kali/</a> and download the "Installer" ISO image (64-bit recommended).</p>
+                            
+                            <div class="rounded-lg overflow-hidden shadow-lg transition transform hover:scale-[1.02] duration-300">
+                                <img src="1.png" alt="Kali Linux Download Page" class="w-full">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8 bg-gray-50 border border-gray-200 rounded-lg p-6 shadow-sm relative overflow-hidden">
+                        <div class="absolute -top-2 -left-2 bg-blue-600 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg">
+                            <span class="font-bold text-lg">2</span>
+                        </div>
+                        <div class="ml-10">
+                            <h4 class="text-xl font-semibold mb-3">Download and Install VMware</h4>
+                            <p>Download VMware Workstation Player (free for non-commercial use) or VMware Workstation Pro from the official VMware website.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8 bg-gray-50 border border-gray-200 rounded-lg p-6 shadow-sm relative overflow-hidden">
+                        <div class="absolute -top-2 -left-2 bg-blue-600 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg">
+                            <span class="font-bold text-lg">3</span>
+                        </div>
+                        <div class="ml-10">
+                            <h4 class="text-xl font-semibold mb-3">Create a New Virtual Machine</h4>
+                            <ol class="list-decimal ml-6 mb-4 space-y-1">
+                                <li>Open VMware and select "Create a New Virtual Machine"</li>
+                                <li>Choose "Installer disc image file (iso)" and browse to select the Kali Linux ISO file</li>
+                                <li>Select "Linux" as the Guest operating system and "Debian" as the Version</li>
+                                <li>Name your VM (e.g., "Kali Linux")</li>
+                                <li>Specify disk capacity (at least 20 GB recommended)</li>
+                            </ol>
+                            
+                            <div class="rounded-lg overflow-hidden shadow-lg transition transform hover:scale-[1.02] duration-300">
+                                <img src="3.png" alt="VMware Create New VM Screen" class="w-full">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8 bg-gray-50 border border-gray-200 rounded-lg p-6 shadow-sm relative overflow-hidden">
+                        <div class="absolute -top-2 -left-2 bg-blue-600 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg">
+                            <span class="font-bold text-lg">4</span>
+                        </div>
+                        <div class="ml-10">
+                            <h4 class="text-xl font-semibold mb-3">Customize Hardware Settings</h4>
+                            <ol class="list-decimal ml-6 mb-4 space-y-1">
+                                <li>Click "Customize Hardware" before finishing</li>
+                                <li>Allocate at least 2 GB (2048 MB) of RAM, 4 GB if possible</li>
+                                <li>Assign 2 processor cores if available</li>
+                                <li>Set Network Adapter to "NAT" for internet access</li>
+                            </ol>
+                            
+                            <div class="rounded-lg overflow-hidden shadow-lg transition transform hover:scale-[1.02] duration-300">
+                                <img src="4.png" alt="VMware Hardware Settings" class="w-full">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8 bg-gray-50 border border-gray-200 rounded-lg p-6 shadow-sm relative overflow-hidden">
+                        <div class="absolute -top-2 -left-2 bg-blue-600 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg">
+                            <span class="font-bold text-lg">5</span>
+                        </div>
+                        <div class="ml-10">
+                            <h4 class="text-xl font-semibold mb-3">Install Kali Linux</h4>
+                            <ol class="list-decimal ml-6 mb-4 space-y-1">
+                                <li>Start the VM and select "Graphical install" from the boot menu</li>
+                                <li>Follow the prompts for language, location, and keyboard settings</li>
+                                <li>Set hostname (e.g., "kali-vm") and domain name (can be left blank)</li>
+                                <li>Create a user account and password (remember these!)</li>
+                                <li>Set up disk partitioning (use the guided option for beginners)</li>
+                                <li>Complete the installation and reboot</li>
+                            </ol>
+                            
+                            <div class="rounded-lg overflow-hidden shadow-lg transition transform hover:scale-[1.02] duration-300">
+                                <img src="5.png" alt="Kali Linux Installer" class="w-full">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- VirtualBox Content -->
+                <div id="virtualbox-content" class="tab-content hidden">
+                    <h3 class="text-2xl font-semibold text-kali-blue mb-6">Installing Kali Linux on VirtualBox</h3>
+                    
+                    <div class="mb-8 bg-gray-50 border border-gray-200 rounded-lg p-6 shadow-sm relative overflow-hidden">
+                        <div class="absolute -top-2 -left-2 bg-blue-600 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg">
+                            <span class="font-bold text-lg">1</span>
+                        </div>
+                        <div class="ml-10">
+                            <h4 class="text-xl font-semibold mb-3">Download the Kali Linux ISO</h4>
+                            <p>Visit the official Kali Linux website at <a href="https://www.kali.org/get-kali/" class="text-blue-600 hover:underline" target="_blank">https://www.kali.org/get-kali/</a> and download the "Installer" ISO image (64-bit recommended).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8 bg-gray-50 border border-gray-200 rounded-lg p-6 shadow-sm relative overflow-hidden">
+                        <div class="absolute -top-2 -left-2 bg-blue-600 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg">
+                            <span class="font-bold text-lg">2</span>
+                        </div>
+                        <div class="ml-10">
+                            <h4 class="text-xl font-semibold mb-3">Download and Install VirtualBox</h4>
+                            <p>Download VirtualBox from <a href="https://www.virtualbox.org/wiki/Downloads" class="text-blue-600 hover:underline" target="_blank">https://www.virtualbox.org/wiki/Downloads</a> and install it. Also download and install the VirtualBox Extension Pack.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8 bg-gray-50 border border-gray-200 rounded-lg p-6 shadow-sm relative overflow-hidden">
+                        <div class="absolute -top-2 -left-2 bg-blue-600 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg">
+                            <span class="font-bold text-lg">3</span>
+                        </div>
+                        <div class="ml-10">
+                            <h4 class="text-xl font-semibold mb-3">Create a New Virtual Machine</h4>
+                            <ol class="list-decimal ml-6 mb-4 space-y-1">
+                                <li>Open VirtualBox and click "New"</li>
+                                <li>Enter a name (e.g., "Kali Linux"), select "Linux" as Type and "Debian (64-bit)" as Version</li>
+                                <li>Allocate at least 2 GB (2048 MB) of RAM, 4 GB if possible</li>
+                                <li>Create a virtual hard disk (VDI type, Dynamically allocated, 20-40 GB in size)</li>
+                            </ol>
+                            
+                            <div class="rounded-lg overflow-hidden shadow-lg transition transform hover:scale-[1.02] duration-300">
+                                <img src="6.png" alt="VirtualBox Create New VM Screen" class="w-full">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8 bg-gray-50 border border-gray-200 rounded-lg p-6 shadow-sm relative overflow-hidden">
+                        <div class="absolute -top-2 -left-2 bg-blue-600 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg">
+                            <span class="font-bold text-lg">4</span>
+                        </div>
+                        <div class="ml-10">
+                            <h4 class="text-xl font-semibold mb-3">Configure Virtual Machine Settings</h4>
+                            <ol class="list-decimal ml-6 mb-4 space-y-1">
+                                <li>Select the new VM and click "Settings"</li>
+                                <li>Under System → Processor, assign 2 or more CPU cores if available</li>
+                                <li>Under Display → Screen, increase Video Memory to 128 MB</li>
+                                <li>Under Storage, select the empty optical drive, then click the disc icon to choose the Kali Linux ISO</li>
+                                <li>Ensure Network is set to "NAT" for internet access</li>
+                            </ol>
+                            
+                            <div class="rounded-lg overflow-hidden shadow-lg transition transform hover:scale-[1.02] duration-300">
+                                <img src="7.png" alt="VirtualBox Settings Screen" class="w-full">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8 bg-gray-50 border border-gray-200 rounded-lg p-6 shadow-sm relative overflow-hidden">
+                        <div class="absolute -top-2 -left-2 bg-blue-600 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg">
+                            <span class="font-bold text-lg">5</span>
+                        </div>
+                        <div class="ml-10">
+                            <h4 class="text-xl font-semibold mb-3">Install Kali Linux</h4>
+                            <p>The installation steps are identical to those for VMware. Start the VM and follow the graphical installer.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="text-2xl font-semibold text-kali-blue my-8">Post-Installation Steps</h3>
+                
+                <div class="mb-8 bg-gray-50 border border-gray-200 rounded-lg p-6 shadow-sm">
+                    <h4 class="text-xl font-semibold mb-4 text-kali-blue">Verify Your Download</h4>
+                    <p class="mb-4">Before installation, it's critically important to verify the integrity and authenticity of your downloaded ISO file:</p>
+                    
+                    <div class="bg-gray-900 text-gray-100 p-4 rounded-md mb-4 overflow-x-auto command-box">
+                        <p># On Linux/macOS:</p>
+                        <p class="text-green-400">shasum -a 256 your_kali_linux_image.iso</p>
+                        <p class="mt-4"># On Windows:</p>
+                        <p class="text-green-400">certutil -hashfile your_kali_linux_image.iso SHA256</p>
+                    </div>
+                    
+                    <p class="mb-4">Compare the output with the SHA256 checksum provided on the <a href="https://www.kali.org/get-kali/" class="text-blue-600 hover:underline">Kali Linux download page</a>. If they match exactly, your download is authentic and uncorrupted.</p>
+                    
+                    <div class="rounded-lg overflow-hidden shadow-md mb-4 animate__animated animate__fadeIn">
+                        <img src="8.png" alt="SHA256 Checksum Verification" class="w-full">
+                    </div>
+                    <p class="text-center italic text-gray-600">Example of SHA256 Checksum Verification</p>
+                </div>
+                
+                <div class="mb-8 bg-gray-50 border border-gray-200 rounded-lg p-6 shadow-sm">
+                    <h4 class="text-xl font-semibold mb-4 text-kali-blue">Update Your Kali Linux System</h4>
+                    <p class="mb-4">Open a terminal and run these commands to update your system:</p>
+                    
+                    <div class="bg-gray-900 text-gray-100 p-4 rounded-md mb-4 overflow-x-auto command-box">
+                        <p class="text-green-400">sudo apt update</p>
+                        <p class="text-green-400">sudo apt full-upgrade -y</p>
+                        <p class="text-green-400">sudo apt autoremove -y</p>
+                        <p class="text-green-400">sudo apt autoclean</p>
+                    </div>
+                    
+                    <div class="rounded-lg overflow-hidden shadow-md mb-6">
+                        <img src="9.png" alt="Kali Linux Update Process" class="w-full">
+                    </div>
+                    
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-md">
+                        <h5 class="font-semibold text-amber-800 mb-2">Troubleshooting Update Issues:</h5>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li><strong>Unable to fetch some archives:</strong> Check internet connection and verify repository sources</li>
+                            <li><strong>Failed to lock /var/lib/dpkg/lock:</strong> Another package manager is running; wait or check for stuck processes</li>
+                            <li><strong>Hash Sum Mismatch:</strong> Try clearing package lists with <code class="bg-amber-100 text-amber-800 px-1 rounded">sudo rm -rf /var/lib/apt/lists/*</code> then update again</li>
+                            <li><strong>Broken packages:</strong> Run <code class="bg-amber-100 text-amber-800 px-1 rounded">sudo apt --fix-broken install</code> to resolve dependency issues</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mb-8 bg-gray-50 border border-gray-200 rounded-lg p-6 shadow-sm">
+                    <h4 class="text-xl font-semibold mb-4 text-kali-blue">Install VM Guest Additions</h4>
+                    <p class="mb-4">For better performance and usability, install the guest additions/tools for your virtualization software:</p>
+                    
+                    <div class="mb-4">
+                        <div class="flex border-b border-gray-200">
+                            <button id="vmware-tools-tab" class="py-2 px-4 text-blue-600 border-b-2 border-blue-500 font-medium" onclick="switchTab('vmware-tools-tab', 'vmware-tools-content')">
+                                VMware Tools
+                            </button>
+                            <button id="vbox-tools-tab" class="py-2 px-4 text-gray-600 font-medium" onclick="switchTab('vbox-tools-tab', 'vbox-tools-content')">
+                                VirtualBox Guest Additions
+                            </button>
+                        </div>
+                        
+                        <div id="vmware-tools-content" class="py-4 tab-content-inner">
+                            <p class="mb-2">The easiest way to install VMware Tools is using apt:</p>
+                            <div class="bg-gray-900 text-gray-100 p-4 rounded-md overflow-x-auto command-box">
+                                <p class="text-green-400">sudo apt update</p>
+                                <p class="text-green-400">sudo apt install -y open-vm-tools-desktop</p>
+                                <p class="text-green-400">sudo reboot</p>
+                            </div>
+                        </div>
+                        
+                        <div id="vbox-tools-content" class="py-4 tab-content-inner hidden">
+                            <p class="mb-2">For VirtualBox Guest Additions:</p>
+                            <div class="bg-gray-900 text-gray-100 p-4 rounded-md overflow-x-auto command-box">
+                                <p class="text-green-400">sudo apt update</p>
+                                <p class="text-green-400">sudo apt install -y build-essential linux-headers-$(uname -r) dkms</p>
+                                <p class="text-yellow-300"># Now insert Guest Additions CD from VirtualBox "Devices" menu</p>
+                                <p class="text-green-400">sudo mount /dev/cdrom /mnt</p>
+                                <p class="text-green-400">cd /mnt</p>
+                                <p class="text-green-400">sudo ./VBoxLinuxAdditions.run</p>
+                                <p class="text-green-400">sudo reboot</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Linux System Fundamentals -->
+        <section id="section3" class="mb-16 scroll-mt-20">
+            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-4 rounded-t-lg shadow-md">
+                <h2 class="text-3xl font-bold">Section 3: Linux System Fundamentals</h2>
+            </div>
+            <div class="bg-white p-6 rounded-b-lg shadow-md">
+                <h3 class="text-2xl font-semibold text-kali-blue mb-4">Understanding the Shell and the Command-Line Interface</h3>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="animate__animated animate__fadeIn">
+                        <p class="mb-4">The <strong>Shell</strong> is a program that takes your commands from the keyboard and gives them to the operating system to perform. It's the primary way to interact with a Linux system at a deeper level.</p>
+                        
+                        <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-md shadow-md mb-4">
+                            <h4 class="font-semibold text-indigo-700 mb-2">Common Linux Shells</h4>
+                            <ul class="list-disc ml-6 space-y-1">
+                                <li><strong>bash</strong> (Bourne Again Shell) - Default in most Linux distros</li>
+                                <li><strong>sh</strong> (Bourne Shell) - An early foundational shell</li>
+                                <li><strong>zsh</strong> (Z Shell) - A powerful shell with advanced features</li>
+                                <li><strong>csh</strong> (C Shell) - Features command history and aliases</li>
+                                <li><strong>ksh</strong> (Korn Shell) - Enhanced version of Bourne shell</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-kali-dark rounded-lg p-6 text-white shadow-lg transform transition duration-300 hover:scale-[1.02] animate__animated animate__fadeIn">
+                        <h4 class="font-semibold text-xl mb-4 text-blue-300">The Command-Line Interface (CLI)</h4>
+                        <div class="bg-black bg-opacity-50 p-4 rounded-md mb-3 command-box overflow-hidden">
+                            <div class="type-animation inline-flex items-center">
+                                <span class="text-green-400 mr-2">user@kali</span>
+                                <span class="text-blue-400 mr-2">~</span>
+                                <span class="text-white">$</span>
+                                <span class="ml-2 text-gray-200">ls -la /etc</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-300">The CLI is a text-based interface where users type commands to perform operations. It's a powerful way to interact with Linux systems efficiently.</p>
+                    </div>
+                </div>
+                
+                <h4 class="text-xl font-semibold text-kali-blue mb-3">Why the Command-Line Is Powerful</h4>
+                
+                <div class="grid md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm transform transition duration-300 hover:-translate-y-1 hover:shadow-md">
+                        <div class="flex justify-center mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-kali-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h5 class="text-lg font-semibold text-center mb-2">Efficiency & Speed</h5>
+                        <p class="text-gray-600 text-sm">Perform complex operations quickly with a single command line instead of navigating through GUI menus</p>
+                    </div>
+                    
+                    <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm transform transition duration-300 hover:-translate-y-1 hover:shadow-md">
+                        <div class="flex justify-center mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-kali-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                        </div>
+                        <h5 class="text-lg font-semibold text-center mb-2">Automation</h5>
+                        <p class="text-gray-600 text-sm">Create scripts to automate repetitive tasks and complex workflows without manual intervention</p>
+                    </div>
+                    
+                    <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm transform transition duration-300 hover:-translate-y-1 hover:shadow-md">
+                        <div class="flex justify-center mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-kali-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                        <h5 class="text-lg font-semibold text-center mb-2">Access to Tools</h5>
+                        <p class="text-gray-600 text-sm">Many security tools in Kali Linux are primarily CLI-based with more options than their GUI alternatives</p>
+                    </div>
+                </div>
+                
+                <h3 class="text-2xl font-semibold text-kali-blue mb-4">The Linux File System Hierarchy</h3>
+                
+                <p class="mb-4">Linux organizes files in a hierarchical structure, starting from the root directory (<code>/</code>). Understanding this structure is essential for navigating and using the system effectively.</p>
+                
+                <div class="overflow-x-auto mb-8">
+                    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md animate__animated animate__fadeIn">
+                        <thead>
+                            <tr class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
+                                <th class="py-3 px-4 text-left">Directory</th>
+                                <th class="py-3 px-4 text-left">Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-blue-50 transition duration-150">
+                                <td class="py-3 px-4 font-mono font-semibold">/</td>
+                                <td class="py-3 px-4">Root directory - the top level of the file system</td>
+                            </tr>
+                            <tr class="hover:bg-blue-50 transition duration-150">
+                                <td class="py-3 px-4 font-mono font-semibold">/bin</td>
+                                <td class="py-3 px-4">Essential user command binaries (executable programs)</td>
+                            </tr>
+                            <tr class="hover:bg-blue-50 transition duration-150">
+                                <td class="py-3 px-4 font-mono font-semibold">/sbin</td>
+                                <td class="py-3 px-4">System binaries (administrative commands)</td>
+                            </tr>
+                            <tr class="hover:bg-blue-50 transition duration-150">
+                                <td class="py-3 px-4 font-mono font-semibold">/etc</td>
+                                <td class="py-3 px-4">System-wide configuration files</td>
+                            </tr>
+                            <tr class="hover:bg-blue-50 transition duration-150">
+                                <td class="py-3 px-4 font-mono font-semibold">/home</td>
+                                <td class="py-3 px-4">User home directories (e.g., /home/username)</td>
+                            </tr>
+                            <tr class="hover:bg-blue-50 transition duration-150">
+                                <td class="py-3 px-4 font-mono font-semibold">/var</td>
+                                <td class="py-3 px-4">Variable data files - logs, spool directories, caches</td>
+                            </tr>
+                            <tr class="hover:bg-blue-50 transition duration-150">
+                                <td class="py-3 px-4 font-mono font-semibold">/tmp</td>
+                                <td class="py-3 px-4">Temporary files - often cleared on reboot</td>
+                            </tr>
+                            <tr class="hover:bg-blue-50 transition duration-150">
+                                <td class="py-3 px-4 font-mono font-semibold">/usr</td>
+                                <td class="py-3 px-4">User utilities and applications</td>
+                            </tr>
+                            <tr class="hover:bg-blue-50 transition duration-150">
+                                <td class="py-3 px-4 font-mono font-semibold">/opt</td>
+                                <td class="py-3 px-4">Optional application software packages</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3 class="text-2xl font-semibold text-kali-blue mb-4">Users, Permissions and Security</h3>
+                
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-white border border-gray-200 rounded-lg p-5 shadow-md">
+                        <h4 class="text-xl font-semibold mb-3">The Root User vs Regular Users</h4>
+                        
+                        <div class="flex items-center mb-4">
+                            <span class="bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mr-3">
+                                #
+                            </span>
+                            <div>
+                                <div class="font-semibold">Root User</div>
+                                <div class="text-sm text-gray-600">Unrestricted system access (dangerous)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center mb-4">
+                            <span class="bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mr-3">
+                                $
+                            </span>
+                            <div>
+                                <div class="font-semibold">Regular User</div>
+                                <div class="text-sm text-gray-600">Limited privileges (safer)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-md">
+                            <div class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-600 mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                </svg>
+                                <span>Use <code class="bg-gray-100 px-1 py-0.5 rounded-sm">sudo</code> to run commands as root when needed</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white border border-gray-200 rounded-lg p-5 shadow-md">
+                        <h4 class="text-xl font-semibold mb-3">File Permissions</h4>
+                        
+                        <div class="mb-4 font-mono bg-gray-100 p-3 rounded-lg flex items-center justify-between">
+                            <div class="flex items-center">
+                                <span class="text-gray-500 mr-2">d</span>
+                                <span class="text-blue-600 mr-1">rwx</span>
+                                <span class="text-green-600 mr-1">r-x</span>
+                                <span class="text-red-600">r--</span>
+                            </div>
+                            <div class="text-gray-500 text-sm">
+                                <span class="border-b border-blue-400">Owner</span> |
+                                <span class="border-b border-green-400">Group</span> |
+                                <span class="border-b border-red-400">Others</span>
+                            </div>
+                        </div>
+                        
+                        <p class="mb-3 text-sm">Linux file permissions control access using three permission types:</p>
+                        
+                        <ul class="mb-3 space-y-1 text-sm">
+                            <li><span class="inline-block w-6 font-mono font-bold text-center">r</span> - Read</li>
+                            <li><span class="inline-block w-6 font-mono font-bold text-center">w</span> - Write</li>
+                            <li><span class="inline-block w-6 font-mono font-bold text-center">x</span> - Execute</li>
+                        </ul>
+                        
+                        <div class="text-center bg-gray-100 p-2 rounded-md text-sm">
+                            <code>chmod</code> command changes permissions
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Basic Linux Commands -->
+        <section id="section4" class="mb-16 scroll-mt-20">
+            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-4 rounded-t-lg shadow-md">
+                <h2 class="text-3xl font-bold">Section 4: Basic Linux Commands and Navigation</h2>
+            </div>
+            <div class="bg-white p-6 rounded-b-lg shadow-md">
+                <h3 class="text-2xl font-semibold text-kali-blue mb-4">Essential Commands for Beginners</h3>
+                <p class="mb-6">Understanding these fundamental commands will help you navigate and interact with your Kali Linux system effectively.</p>
+                
+                <!-- Command cards section -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+                    <!-- Navigation Commands -->
+                    <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md transform transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        <div class="bg-blue-100 py-3 px-4 border-b border-blue-200">
+                            <h4 class="text-lg font-semibold text-blue-800">Navigation Commands</h4>
+                        </div>
+                        <div class="p-4">
+                            <ul class="space-y-3">
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">pwd</div>
+                                    <div class="text-sm text-gray-600 mt-1">Print Working Directory - shows your current location</div>
+                                </li>
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">cd <span class="text-gray-500">[directory]</span></div>
+                                    <div class="text-sm text-gray-600 mt-1">Change Directory - navigate to specified directory</div>
+                                </li>
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">ls</div>
+                                    <div class="text-sm text-gray-600 mt-1">List - show files and directories</div>
+                                </li>
+                                <li class="text-sm text-gray-500 italic pt-1 border-t border-gray-100">
+                                    <div class="flex items-start">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 mt-0.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Try <span class="font-mono">cd ~</span> to go to home directory
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- File Management -->
+                    <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md transform transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        <div class="bg-green-100 py-3 px-4 border-b border-green-200">
+                            <h4 class="text-lg font-semibold text-green-800">File Management</h4>
+                        </div>
+                        <div class="p-4">
+                            <ul class="space-y-3">
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">touch <span class="text-gray-500">[filename]</span></div>
+                                    <div class="text-sm text-gray-600 mt-1">Create an empty file</div>
+                                </li>
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">cp <span class="text-gray-500">[source] [destination]</span></div>
+                                    <div class="text-sm text-gray-600 mt-1">Copy files or directories</div>
+                                </li>
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">mv <span class="text-gray-500">[source] [destination]</span></div>
+                                    <div class="text-sm text-gray-600 mt-1">Move or rename files/directories</div>
+                                </li>
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">rm <span class="text-gray-500">[filename]</span></div>
+                                    <div class="text-sm text-gray-600 mt-1">Remove files (use with caution!)</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Directory Management -->
+                    <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md transform transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        <div class="bg-purple-100 py-3 px-4 border-b border-purple-200">
+                            <h4 class="text-lg font-semibold text-purple-800">Directory Management</h4>
+                        </div>
+                        <div class="p-4">
+                            <ul class="space-y-3">
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">mkdir <span class="text-gray-500">[dirname]</span></div>
+                                    <div class="text-sm text-gray-600 mt-1">Create a new directory</div>
+                                </li>
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">rmdir <span class="text-gray-500">[dirname]</span></div>
+                                    <div class="text-sm text-gray-600 mt-1">Remove an empty directory</div>
+                                </li>
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">rm -r <span class="text-gray-500">[dirname]</span></div>
+                                    <div class="text-sm text-gray-600 mt-1">Remove directory and contents (caution!)</div>
+                                </li>
+                                <li class="text-sm text-gray-500 italic pt-1 border-t border-gray-100">
+                                    <div class="flex items-start">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 mt-0.5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                        </svg>
+                                        <span class="font-mono">rm -rf /</span> is dangerous - never use it!
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Viewing Files -->
+                    <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md transform transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        <div class="bg-amber-100 py-3 px-4 border-b border-amber-200">
+                            <h4 class="text-lg font-semibold text-amber-800">Viewing Files</h4>
+                        </div>
+                        <div class="p-4">
+                            <ul class="space-y-3">
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">cat <span class="text-gray-500">[filename]</span></div>
+                                    <div class="text-sm text-gray-600 mt-1">Display entire file content</div>
+                                </li>
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">less <span class="text-gray-500">[filename]</span></div>
+                                    <div class="text-sm text-gray-600 mt-1">View file content page by page</div>
+                                </li>
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">head <span class="text-gray-500">[filename]</span></div>
+                                    <div class="text-sm text-gray-600 mt-1">Show first 10 lines of file</div>
+                                </li>
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">tail <span class="text-gray-500">[filename]</span></div>
+                                    <div class="text-sm text-gray-600 mt-1">Show last 10 lines of file</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- System Information -->
+                    <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md transform transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        <div class="bg-teal-100 py-3 px-4 border-b border-teal-200">
+                            <h4 class="text-lg font-semibold text-teal-800">System Information</h4>
+                        </div>
+                        <div class="p-4">
+                            <ul class="space-y-3">
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">uname -a</div>
+                                    <div class="text-sm text-gray-600 mt-1">Show system and kernel information</div>
+                                </li>
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">df -h</div>
+                                    <div class="text-sm text-gray-600 mt-1">Show disk usage in human-readable format</div>
+                                </li>
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">free -m</div>
+                                    <div class="text-sm text-gray-600 mt-1">Show memory usage in megabytes</div>
+                                </li>
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">top</div>
+                                    <div class="text-sm text-gray-600 mt-1">Display running processes (press q to exit)</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Getting Help -->
+                    <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md transform transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        <div class="bg-indigo-100 py-3 px-4 border-b border-indigo-200">
+                            <h4 class="text-lg font-semibold text-indigo-800">Getting Help</h4>
+                        </div>
+                        <div class="p-4">
+                            <ul class="space-y-3">
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">man <span class="text-gray-500">[command]</span></div>
+                                    <div class="text-sm text-gray-600 mt-1">Display the manual page for a command</div>
+                                </li>
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">[command] --help</div>
+                                    <div class="text-sm text-gray-600 mt-1">Show brief help information for a command</div>
+                                </li>
+                                <li>
+                                    <div class="font-mono text-kali-blue font-semibold">apropos <span class="text-gray-500">[keyword]</span></div>
+                                    <div class="text-sm text-gray-600 mt-1">Search for commands related to a keyword</div>
+                                </li>
+                                <li class="text-sm text-gray-500 italic pt-1 border-t border-gray-100">
+                                    <div class="flex items-start">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 mt-0.5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Press <span class="font-mono">q</span> to exit man pages
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="text-2xl font-semibold text-kali-blue mb-4">Try It Yourself: Interactive Terminal</h3>
+                
+                <div class="bg-gray-900 text-gray-100 p-4 rounded-lg shadow-lg mb-8 overflow-hidden">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex space-x-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-sm text-gray-400">Terminal</div>
+                    </div>
+                    
+                    <div class="command-box font-mono text-sm mb-2">
+                        <p class="mb-1">
+                            <span class="text-green-400">user@kali</span><span class="text-blue-400">:~</span><span class="text-white">$</span> <span class="text-gray-300">ls -l</span>
+                        </p>
+                        <p class="mb-1 text-blue-200">total 8</p>
+                        <p class="mb-1 text-blue-200">drwxr-xr-x 2 user user 4096 May 18 10:30 Documents</p>
+                        <p class="mb-1 text-blue-200">drwxr-xr-x 2 user user 4096 May 18 10:30 Downloads</p>
+                    </div>
+                    
+                    <div class="command-box font-mono text-sm mb-2">
+                        <p class="mb-1">
+                            <span class="text-green-400">user@kali</span><span class="text-blue-400">:~</span><span class="text-white">$</span> <span class="text-gray-300">cd Documents</span>
+                        </p>
+                    </div>
+                    
+                    <div class="command-box font-mono text-sm mb-2">
+                        <p class="mb-1">
+                            <span class="text-green-400">user@kali</span><span class="text-blue-400">:~/Documents</span><span class="text-white">$</span> <span class="text-gray-300">pwd</span>
+                        </p>
+                        <p class="mb-1 text-blue-200">/home/user/Documents</p>
+                    </div>
+                    
+                    <div class="command-box font-mono text-sm mb-2">
+                        <p class="mb-1">
+                            <span class="text-green-400">user@kali</span><span class="text-blue-400">:~/Documents</span><span class="text-white">$</span> <span class="text-gray-300">echo "Hello Kali Linux" > greeting.txt</span>
+                        </p>
+                    </div>
+                    
+                    <div class="command-box font-mono text-sm">
+                        <p class="mb-1">
+                            <span class="text-green-400">user@kali</span><span class="text-blue-400">:~/Documents</span><span class="text-white">$</span> <span class="text-gray-300">cat greeting.txt</span>
+                        </p>
+                        <p class="mb-1 text-blue-200">Hello Kali Linux</p>
+                        <p class="mb-1">
+                            <span class="text-green-400">user@kali</span><span class="text-blue-400">:~/Documents</span><span class="text-white">$</span> <span class="text-gray-300 animate-pulse">_</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-md shadow-md mb-6">
+                    <h4 class="font-semibold text-blue-700 mb-2">Practice Makes Perfect</h4>
+                    <p class="text-gray-700">The best way to learn Linux commands is through regular practice. Try creating directories, making files, moving them around, and exploring the system to build muscle memory and understanding.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Kali Linux Tools -->
+        <section id="section5" class="mb-16 scroll-mt-20">
+            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-4 rounded-t-lg shadow-md">
+                <h2 class="text-3xl font-bold">Section 5: Kali Linux Tools Introduction</h2>
+            </div>
+            <div class="bg-white p-6 rounded-b-lg shadow-md">
+                <h3 class="text-2xl font-semibold text-kali-blue mb-4">Understanding Kali's Security Tools</h3>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="lg:col-span-2">
+                        <p class="mb-4">Kali Linux comes pre-installed with hundreds of security tools designed for various cybersecurity tasks. These tools are organized by categories in the Applications menu.</p>
+                        <p class="mb-4">As a beginner, it's important to first understand what these tools do and learn to use them ethically and legally. Never use these tools against systems you don't own or have explicit permission to test.</p>
+                        <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-md shadow-sm mb-4">
+                            <div class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                                <div>
+                                    <span class="font-semibold text-red-700">Legal Warning:</span>
+                                    <p class="mt-1 text-red-700">Unauthorized scanning, exploitation, or hacking of systems is illegal and can result in severe legal consequences including fines and imprisonment.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-center">
+                        <img src="https://www.kali.org/images/kali-tools-logo.svg" alt="Kali Tools Logo" class="h-48 animate__animated animate__pulse animate__infinite animate__slow">
+                    </div>
+                </div>
+                
+                <h3 class="text-2xl font-semibold text-kali-blue mb-6">Popular Tool Categories</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <!-- Information Gathering Tools -->
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg overflow-hidden shadow-md transform transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        <div class="p-5">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-blue-600 p-3 rounded-full mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-semibold text-blue-800">Information Gathering</h4>
+                            </div>
+                            
+                            <p class="mb-4 text-gray-700">Tools that help collect information about networks, hosts, and domains.</p>
+                            
+                            <div class="space-y-3 mb-4">
+                                <div class="flex items-center bg-white p-2 rounded-md shadow-sm">
+                                    <span class="font-semibold text-kali-blue mr-2">Nmap:</span>
+                                    <span class="text-sm text-gray-600">Network scanning and host discovery</span>
+                                </div>
+                                <div class="flex items-center bg-white p-2 rounded-md shadow-sm">
+                                    <span class="font-semibold text-kali-blue mr-2">Maltego:</span>
+                                    <span class="text-sm text-gray-600">Open source intelligence and forensics</span>
+                                </div>
+                                <div class="flex items-center bg-white p-2 rounded-md shadow-sm">
+                                    <span class="font-semibold text-kali-blue mr-2">Recon-ng:</span>
+                                    <span class="text-sm text-gray-600">Web reconnaissance framework</span>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <span class="inline-block bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium">
+                                    First phase of security testing
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Vulnerability Analysis -->
+                    <div class="bg-gradient-to-br from-green-50 to-teal-50 border border-green-200 rounded-lg overflow-hidden shadow-md transform transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        <div class="p-5">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-green-600 p-3 rounded-full mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-semibold text-green-800">Vulnerability Analysis</h4>
+                            </div>
+                            
+                            <p class="mb-4 text-gray-700">Tools that identify security weaknesses and vulnerabilities in systems.</p>
+                            
+                            <div class="space-y-3 mb-4">
+                                <div class="flex items-center bg-white p-2 rounded-md shadow-sm">
+                                    <span class="font-semibold text-kali-blue mr-2">OpenVAS:</span>
+                                    <span class="text-sm text-gray-600">Vulnerability scanning and management</span>
+                                </div>
+                                <div class="flex items-center bg-white p-2 rounded-md shadow-sm">
+                                    <span class="font-semibold text-kali-blue mr-2">Nikto:</span>
+                                    <span class="text-sm text-gray-600">Web server scanner</span>
+                                </div>
+                                <div class="flex items-center bg-white p-2 rounded-md shadow-sm">
+                                    <span class="font-semibold text-kali-blue mr-2">Legion:</span>
+                                    <span class="text-sm text-gray-600">Automated reconnaissance framework</span>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <span class="inline-block bg-green-600 text-white px-4 py-2 rounded-full text-sm font-medium">
+                                    Identifies security weaknesses
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Web Application Analysis -->
+                    <div class="bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-200 rounded-lg overflow-hidden shadow-md transform transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        <div class="p-5">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-purple-600 p-3 rounded-full mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-semibold text-purple-800">Web Application Analysis</h4>
+                            </div>
+                            
+                            <p class="mb-4 text-gray-700">Tools focused on finding vulnerabilities in web applications.</p>
+                            
+                            <div class="space-y-3 mb-4">
+                                <div class="flex items-center bg-white p-2 rounded-md shadow-sm">
+                                    <span class="font-semibold text-kali-blue mr-2">Burp Suite:</span>
+                                    <span class="text-sm text-gray-600">Web vulnerability scanner/proxy</span>
+                                </div>
+                                <div class="flex items-center bg-white p-2 rounded-md shadow-sm">
+                                    <span class="font-semibold text-kali-blue mr-2">OWASP ZAP:</span>
+                                    <span class="text-sm text-gray-600">Web app security scanner</span>
+                                </div>
+                                <div class="flex items-center bg-white p-2 rounded-md shadow-sm">
+                                    <span class="font-semibold text-kali-blue mr-2">SQLmap:</span>
+                                    <span class="text-sm text-gray-600">SQL injection and database takeover tool</span>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <span class="inline-block bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium">
+                                    Web security testing
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Password Attacks -->
+                    <div class="bg-gradient-to-br from-red-50 to-pink-50 border border-red-200 rounded-lg overflow-hidden shadow-md transform transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        <div class="p-5">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-red-600 p-3 rounded-full mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-semibold text-red-800">Password Attacks</h4>
+                            </div>
+                            
+                            <p class="mb-4 text-gray-700">Tools for testing password strength and security.</p>
+                            
+                            <div class="space-y-3 mb-4">
+                                <div class="flex items-center bg-white p-2 rounded-md shadow-sm">
+                                    <span class="font-semibold text-kali-blue mr-2">Hashcat:</span>
+                                    <span class="text-sm text-gray-600">Advanced password recovery</span>
+                                </div>
+                                <div class="flex items-center bg-white p-2 rounded-md shadow-sm">
+                                    <span class="font-semibold text-kali-blue mr-2">John the Ripper:</span>
+                                    <span class="text-sm text-gray-600">Password cracking tool</span>
+                                </div>
+                                <div class="flex items-center bg-white p-2 rounded-md shadow-sm">
+                                    <span class="font-semibold text-kali-blue mr-2">Hydra:</span>
+                                    <span class="text-sm text-gray-600">Online password brute-force tool</span>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <span class="inline-block bg-red-600 text-white px-4 py-2 rounded-full text-sm font-medium">
+                                    Password security assessment
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="text-2xl font-semibold text-kali-blue mb-4">Example: Basic Network Scanning with Nmap</h3>
+                
+                <p class="mb-4">Let's look at a simple example of using Nmap, one of the most fundamental tools in Kali Linux:</p>
+                
+                <div class="bg-gray-900 text-gray-100 p-4 rounded-lg shadow-lg mb-6 overflow-hidden">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex space-x-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-sm text-gray-400">Terminal - Nmap Example</div>
+                    </div>
+                    
+                    <div class="command-box font-mono text-sm">
+                        <p class="mb-1">
+                            <span class="text-green-400">user@kali</span><span class="text-blue-400">:~</span><span class="text-white">$</span> <span class="text-gray-300">sudo nmap -sV -p 1-1000 192.168.1.1</span>
+                        </p>
+                        <p class="mb-1 text-blue-200">Starting Nmap 7.92 ( https://nmap.org ) at 2025-05-18 15:30 EDT</p>
+                        <p class="mb-1 text-blue-200">Nmap scan report for router.home (192.168.1.1)</p>
+                        <p class="mb-1 text-blue-200">Host is up (0.0023s latency).</p>
+                        <p class="mb-1 text-blue-200">Not shown: 997 closed ports</p>
+                        <p class="mb-1 text-blue-200">PORT   STATE SERVICE VERSION</p>
+                        <p class="mb-1 text-blue-200">22/tcp  open  ssh     OpenSSH 8.2p1</p>
+                        <p class="mb-1 text-blue-200">80/tcp  open  http    nginx 1.18.0</p>
+                        <p class="mb-1 text-blue-200">443/tcp open  https   nginx 1.18.0</p>
+                        <p class="mb-1 text-blue-200">MAC Address: 00:11:22:33:44:55 (Example Vendor)</p>
+                        <p class="mb-1 text-blue-200">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</p>
+                        <p class="mb-1 text-blue-200">Nmap done: 1 IP address (1 host up) scanned in 12.34 seconds</p>
+                    </div>
+                </div>
+                
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-md mb-8">
+                    <h4 class="font-semibold text-blue-700 mb-2">Command Explanation:</h4>
+                    <ul class="list-disc ml-6 space-y-1 text-gray-700">
+                        <li><code class="bg-gray-100 px-1 rounded-sm">sudo</code> - Run with administrative privileges</li>
+                        <li><code class="bg-gray-100 px-1 rounded-sm">nmap</code> - The network mapping tool</li>
+                        <li><code class="bg-gray-100 px-1 rounded-sm">-sV</code> - Detect service versions</li>
+                        <li><code class="bg-gray-100 px-1 rounded-sm">-p 1-1000</code> - Scan ports 1-1000</li>
+                        <li><code class="bg-gray-100 px-1 rounded-sm">192.168.1.1</code> - Target IP address (typically a router in home networks)</li>
+                    </ul>
+                </div>
+                
+                <h3 class="text-2xl font-semibold text-kali-blue mb-4">Cybersecurity Workflow</h3>
+                
+                <div class="relative overflow-hidden bg-white rounded-lg shadow-lg mb-8">
+                    <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-600 opacity-20"></div>
+                    
+                    <div class="relative p-6">
+                        <div class="flex justify-center mb-8">
+                            <div class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-full shadow-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                </svg>
+                                Security Testing Workflow
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                            <div class="bg-white p-4 rounded-lg shadow border-t-4 border-blue-500 transform transition duration-300 hover:-translate-y-1 hover:shadow-md">
+                                <div class="text-blue-600 font-bold text-xl mb-2 text-center">1</div>
+                                <h5 class="font-semibold text-center mb-2">Reconnaissance</h5>
+                                <p class="text-sm text-gray-600 text-center">Gather information about the target</p>
+                            </div>
+                            
+                            <div class="bg-white p-4 rounded-lg shadow border-t-4 border-indigo-500 transform transition duration-300 hover:-translate-y-1 hover:shadow-md">
+                                <div class="text-indigo-600 font-bold text-xl mb-2 text-center">2</div>
+                                <h5 class="font-semibold text-center mb-2">Scanning</h5>
+                                <p class="text-sm text-gray-600 text-center">Identify open ports and services</p>
+                            </div>
+                            
+                            <div class="bg-white p-4 rounded-lg shadow border-t-4 border-purple-500 transform transition duration-300 hover:-translate-y-1 hover:shadow-md">
+                                <div class="text-purple-600 font-bold text-xl mb-2 text-center">3</div>
+                                <h5 class="font-semibold text-center mb-2">Vulnerability Assessment</h5>
+                                <p class="text-sm text-gray-600 text-center">Find security weaknesses</p>
+                            </div>
+                            
+                            <div class="bg-white p-4 rounded-lg shadow border-t-4 border-red-500 transform transition duration-300 hover:-translate-y-1 hover:shadow-md">
+                                <div class="text-red-600 font-bold text-xl mb-2 text-center">4</div>
+                                <h5 class="font-semibold text-center mb-2">Exploitation</h5>
+                                <p class="text-sm text-gray-600 text-center">Test vulnerabilities (with permission)</p>
+                            </div>
+                            
+                            <div class="bg-white p-4 rounded-lg shadow border-t-4 border-green-500 transform transition duration-300 hover:-translate-y-1 hover:shadow-md">
+                                <div class="text-green-600 font-bold text-xl mb-2 text-center">5</div>
+                                <h5 class="font-semibold text-center mb-2">Reporting</h5>
+                                <p class="text-sm text-gray-600 text-center">Document findings and solutions</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-center mt-6">
+                            <div class="h-1 bg-gradient-to-r from-blue-400 via-purple-500 to-green-500 rounded-full w-3/4"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="text-2xl font-semibold text-kali-blue mb-4">Learning Resources</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md transform transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        <div class="bg-blue-600 text-white p-3 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                            Official Documentation
+                        </div>
+                        <div class="p-4">
+                            <ul class="space-y-2 text-sm">
+                                <li>
+                                    <a href="https://www.kali.org/docs/" class="text-blue-600 hover:underline flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                        </svg>
+                                        Kali Linux Documentation
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.kali.org/tools/" class="text-blue-600 hover:underline flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                        </svg>
+                                        Kali Tools Documentation
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.offensive-security.com/metasploit-unleashed/" class="text-blue-600 hover:underline flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                        </svg>
+                                        Metasploit Unleashed
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md transform transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        <div class="bg-indigo-600 text-white p-3 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                            Video Tutorials
+                        </div>
+                        <div class="p-4">
+                            <ul class="space-y-2 text-sm">
+                                <li>
+                                    <a href="https://www.youtube.com/c/KaliLinux" class="text-blue-600 hover:underline flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                        </svg>
+                                        Kali Linux YouTube Channel
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.youtube.com/hackersploit" class="text-blue-600 hover:underline flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                        </svg>
+                                        HackerSploit
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.youtube.com/c/NetworkChuck" class="text-blue-600 hover:underline flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                        </svg>
+                                        NetworkChuck
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md transform transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        <div class="bg-green-600 text-white p-3 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                            </svg>
+                            Practice Platforms
+                        </div>
+                        <div class="p-4">
+                            <ul class="space-y-2 text-sm">
+                                <li>
+                                    <a href="https://www.hackthebox.eu/" class="text-blue-600 hover:underline flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                        </svg>
+                                        HackTheBox
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://tryhackme.com/" class="text-blue-600 hover:underline flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                        </svg>
+                                        TryHackMe
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.vulnhub.com/" class="text-blue-600 hover:underline flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                        </svg>
+                                        VulnHub
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-green-50 border-l-4 border-green-600 p-4 rounded-md shadow-md">
+                    <h4 class="font-semibold text-green-800 mb-2 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                        </svg>
+                        Next Steps
+                    </h4>
+                    <p class="text-gray-700">Start with simple tools like Nmap to explore your own network (with permission). Follow tutorials, participate in capture-the-flag challenges, and most importantly, maintain ethical standards in all your security testing practices. The cybersecurity journey is a continuous learning process!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="mt-16 border-t pt-8 text-center">
+            <p class="text-gray-600">Created with 💙 by Muhammad Kurkar</p>
+            <p class="text-sm text-gray-500 mt-2">© 2025 - All information is for educational purposes only - mkurkar</p>
+        </footer>
+    </div>
+
+    <script>
+        // Tab switching for installation methods
+        function switchTab(activeTabId, activeContentId) {
+            // Get all tab buttons and content divs
+            const tabIds = ['vmware-tab', 'virtualbox-tab'];
+            const contentIds = ['vmware-content', 'virtualbox-content'];
+            
+            if (activeTabId === 'vmware-tools-tab' || activeTabId === 'vbox-tools-tab') {
+                tabIds[0] = 'vmware-tools-tab';
+                tabIds[1] = 'vbox-tools-tab';
+                contentIds[0] = 'vmware-tools-content';
+                contentIds[1] = 'vbox-tools-content';
+            }
+            
+            // Hide all content
+            contentIds.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            
+            // Remove active styles from all tabs
+            tabIds.forEach(id => {
+                document.getElementById(id).classList.remove('text-blue-600', 'border-b-2', 'border-blue-500');
+                document.getElementById(id).classList.add('text-gray-600');
+            });
+            
+            // Show active content
+            document.getElementById(activeContentId).classList.remove('hidden');
+            
+            // Style active tab
+            document.getElementById(activeTabId).classList.remove('text-gray-600');
+            document.getElementById(activeTabId).classList.add('text-blue-600', 'border-b-2', 'border-blue-500');
+        }
+    </script>
+</body>
+</html>
